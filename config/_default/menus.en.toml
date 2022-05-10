@@ -15,7 +15,13 @@
   weight = 300
   identifier = "about"
   url = "/about/"
-
+  
+  [[main]]
+  name = "Files"
+  weight = 300
+  identifier = "files"
+  url = "/files/"
+  
   # [[main]]
   # name = "Contact"
   # weight = 400
