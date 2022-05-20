@@ -16,11 +16,11 @@
   identifier = "about"
   url = "/about/"
   
-  [[main]]
-  name = "Files"
-  weight = 300
-  identifier = "files"
-  url = "/files/"
+  #[[main]]
+  #name = "Files"
+  #weight = 300
+  #identifier = "files"
+  #url = "/files/"
   
   # [[main]]
   # name = "Contact"
