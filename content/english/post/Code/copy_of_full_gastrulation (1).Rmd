@@ -1,0 +1,230 @@
+---
+title: "Selected graphs for Wnt, Frizzeled, LRP5/6, DVL"
+author: "Lorenzo Rodriguez-Cruz"
+date: "March 8, 2022"
+output:
+  html_document:
+    df_print: paged
+html_documents:
+  css: styles.css
+---
+
+## Load Packages
+```{r global, message=FALSE}
+library(scran)
+library(scater)
+library(tidyverse)
+```
+<!-- The code below loads images for Wnt reference and caner pathway -->
+
+<img src = "https://www.kegg.jp/tmp/search_pathway_text//map04310_org_202203101900548011.png?" alt = "reference pathway">
+
+<img src = "https://www.kegg.jp/tmp/search_pathway_text//map05226_org_2022031019425380172.png?" alt = "cancer pathway">
+
+<p style="background-color: white;">
+wnt</br>
+Wnt6  ENSMUSG00000033227 </br>
+Wnt2  ENSMUSG00000010797 </br>
+Wnt5b ENSMUSG00000030170 </br>	
+Wnt5a ENSMUSG00000021994 </br>	
+Wnt7b ENSMUSG00000022382 </br>	
+</p>
+<p style="background-color: white;">
+dvl</br>
+Dvl3 ENSMUSG00000003233</br>
+Dvl2 ENSMUSG00000020888</br>
+Dvl1 ENSMUSG00000029071</br>
+</p>
+
+<p style="background-color: white;">
+lrp</br>
+Lrp6 ENSMUSG00000030201</br>
+Lrp5 ENSMUSG00000024913</br>
+</p>
+
+<p style="background-color: white;">
+frizzled</br>
+Fzd1 ENSMUSG00000044674</br>
+Fzd2 ENSMUSG00000050288</br>
+Fzd3 ENSMUSG00000007989</br>
+Fzd4 ENSMUSG00000049791</br>
+Fzd5 ENSMUSG00000045005</br>
+Fzd6 ENSMUSG00000022297</br>
+Fzd7 ENSMUSG00000041075</br>
+Fzd8 ENSMUSG00000036904</br>
+Fzd9 ENSMUSG00000049551</br>
+Fzd10 ENSMUSG00000081683</br>
+</p>
+
+
+```{css}
+body{
+  background-image: url("https://images.pexels.com/photos/572897/pexels-photo-572897.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
+  background-position: center center;
+}
+
+```
+
+
+```{r}
+load("~/workspace/c_moor_data/gastrulation/gastrulation_sce.rda")
+sce <- logNormCounts(sce)
+```
+
+```{r}
+plotReducedDim(object = sce, dimred="umap", colour_by="stage")
+```
+ <h1 style = "background-color: white;">Wnt graphs</h1>
+```{r}
+genes <- c("ENSMUSG00000033227", "ENSMUSG00000010797", "ENSMUSG00000030170", "ENSMUSG00000021994", "ENSMUSG00000022382")
+wnt6 <-  "ENSMUSG00000033227"
+wnt2 <-  "ENSMUSG00000010797"
+wnt5b <- "ENSMUSG00000030170"
+wnt5a <- "ENSMUSG00000021994"
+wnt7b <- "ENSMUSG00000022382"
+plotExpression(object = sce, features = genes, x = "stage", colour_by = "stage") + theme(axis.text.x = element_text(angle = 90))
+coi <- colData(sce)$stage %in% c("E7.0", "E8.0")
+#unique(colData(sce)$stage)
+plotExpression(object = sce, features = genes, colour_by = "celltype", x = "celltype",) + theme(axis.text.x = element_text(angle = 90))
+coi <- colData(sce)$stage %in% c("E7.0", "E8.0")
+#for the wnt6
+plotExpression(object = sce, features = wnt6, colour_by = "stage", x = "stage",) + theme(axis.text.x = element_text(angle = 90))
+plotExpression(object = sce, features = wnt6, colour_by = "celltype", x = "celltype",) + theme(axis.text.x = element_text(angle = 90))
+#wnt2
+plotExpression(object = sce, features = wnt2, colour_by = "stage", x = "stage",) + theme(axis.text.x = element_text(angle = 90))
+plotExpression(object = sce, features = wnt6, colour_by = "celltype", x = "celltype",) + theme(axis.text.x = element_text(angle = 90))
+#wnt5b
+plotExpression(object = sce, features = wnt5b, colour_by = "stage", x = "stage",) + theme(axis.text.x = element_text(angle = 90))
+plotExpression(object = sce, features = wnt6, colour_by = "celltype", x = "celltype",) + theme(axis.text.x = element_text(angle = 90))
+#wnt5a
+plotExpression(object = sce, features = wnt5a, colour_by = "stage", x = "stage",) + theme(axis.text.x = element_text(angle = 90))
+plotExpression(object = sce, features = wnt6, colour_by = "celltype", x = "celltype",) + theme(axis.text.x = element_text(angle = 90))
+#wnt7b
+plotExpression(object = sce, features = wnt7b, colour_by = "stage", x = "stage",) + theme(axis.text.x = element_text(angle = 90))
+plotExpression(object = sce, features = wnt6, colour_by = "celltype", x = "celltype",) + theme(axis.text.x = element_text(angle = 90))
+#
+#sce_subset <- sce[,coi]
+#plotReducedDim(object = sce_subset, dimred="umap", colour_by="stage")
+#plotExpression(object = sce, features = genes, x = "celltype", colour_by = "celltype") + theme(axis.text.x = element_text(angle = 90))
+
+```
+<h1 style = "background-color: white;">Lrp 5 & 6 graphs</h1>
+```{r}
+#for the lrp 5 & 6
+genes <- c("ENSMUSG00000030201", "ENSMUSG00000024913")
+plotExpression(object = sce, features = genes, x = "stage", colour_by = "stage") + theme(axis.text.x = element_text(angle = 90))
+coi <- colData(sce)$stage %in% c("E7.0", "E8.0")
+#unique(colData(sce)$stage)
+sce_subset <- sce[,coi]
+plotReducedDim(object = sce_subset, dimred="umap", colour_by="stage")
+plotExpression(object = sce, features = genes, x = "celltype", colour_by = "celltype") + theme(axis.text.x = element_text(angle = 90))
+
+lrp6 <- "ENSMUSG00000030201"
+lrp5 <- "ENSMUSG00000024913"
+#for lrp6
+plotExpression(object = sce, features = lrp6, x = "stage", colour_by = "stage") + theme(axis.text.x = element_text(angle = 90))
+plotExpression(object = sce, features = lrp6, x = "celltype", colour_by = "celltype") + theme(axis.text.x = element_text(angle = 90))
+#for Lrp5
+plotExpression(object = sce, features = lrp5, x = "stage", colour_by = "stage") + theme(axis.text.x = element_text(angle = 90))
+plotExpression(object = sce, features = lrp5, x = "celltype", colour_by = "celltype") + theme(axis.text.x = element_text(angle = 90))
+
+```
+<h1 style = "background-color: white;">Dvl graphs</h1>
+m
+```{r}
+#for dvl's
+#dvl 3 dvl 2 dvl 1
+genes <- c("ENSMUSG00000003233", "ENSMUSG00000020888", "ENSMUSG00000029071")
+dvl3 <- "ENSMUSG00000003233"
+dvl2 <- "ENSMUSG00000020888"
+dvl1 <- "ENSMUSG00000029071"
+plotExpression(object = sce, features = genes, x = "stage", colour_by = "stage") + theme(axis.text.x = element_text(angle = 90))
+coi <- colData(sce)$stage %in% c("E7.0", "E8.0")
+#unique(colData(sce)$stage)
+sce_subset <- sce[,coi]
+plotReducedDim(object = sce_subset, dimred="umap", colour_by="stage")
+plotExpression(object = sce, features = genes, x = "celltype", colour_by = "celltype") + theme(axis.text.x = element_text(angle = 90))
+
+#for dvl3
+plotExpression(object = sce, features = dvl3, x = "stage", colour_by = "stage") + theme(axis.text.x = element_text(angle = 90))
+plotExpression(object = sce, features = dvl3, x = "celltype", colour_by = "celltype") + theme(axis.text.x = element_text(angle = 90))
+
+#for dvl2
+plotExpression(object = sce, features = dvl2, x = "stage", colour_by = "stage") + theme(axis.text.x = element_text(angle = 90))
+plotExpression(object = sce, features = dvl2, x = "celltype", colour_by = "celltype") + theme(axis.text.x = element_text(angle = 90))
+
+#for dvl1
+plotExpression(object = sce, features = dvl1, x = "stage", colour_by = "stage") + theme(axis.text.x = element_text(angle = 90))
+plotExpression(object = sce, features = dvl1, x = "celltype", colour_by = "celltype") + theme(axis.text.x = element_text(angle = 90))
+
+```
+##Frizzled is the receptor for Wnt
+## I wanted to see all the expressions in the mouse gastrulation
+
+<h1 style = "background-color: white;">Frizzled graphs</h1>
+```{r}
+#for the frizzled
+genes <- c("ENSMUSG00000044674", "ENSMUSG00000050288", "ENSMUSG00000007989", "ENSMUSG00000049791", "ENSMUSG00000045005")
+Fzd1 <- "ENSMUSG00000044674"
+Fzd2 <- "ENSMUSG00000050288"
+Fzd3 <- "ENSMUSG00000007989"
+Fzd4 <- "ENSMUSG00000049791"
+Fzd5 <- "ENSMUSG00000045005"
+
+plotExpression(object = sce, features = genes, x = "stage", colour_by = "stage") + theme(axis.text.x = element_text(angle = 90))
+coi <- colData(sce)$stage %in% c("E7.0", "E8.0")
+#unique(colData(sce)$stage)
+sce_subset <- sce[,coi]
+plotReducedDim(object = sce_subset, dimred="umap", colour_by="stage")
+plotExpression(object = sce, features = genes, x = "celltype", colour_by = "celltype") + theme(axis.text.x = element_text(angle = 90))
+#for Fzd1
+plotExpression(object = sce, features = Fzd1, x = "stage", colour_by = "stage") + theme(axis.text.x = element_text(angle = 90))
+plotExpression(object = sce, features = Fzd1, x = "celltype", colour_by = "celltype") + theme(axis.text.x = element_text(angle = 90))
+#for Fzd2
+plotExpression(object = sce, features = Fzd2, x = "stage", colour_by = "stage") + theme(axis.text.x = element_text(angle = 90))
+plotExpression(object = sce, features = Fzd2, x = "celltype", colour_by = "celltype") + theme(axis.text.x = element_text(angle = 90))
+#for Fzd3
+plotExpression(object = sce, features = Fzd3, x = "stage", colour_by = "stage") + theme(axis.text.x = element_text(angle = 90))
+plotExpression(object = sce, features = Fzd3, x = "celltype", colour_by = "celltype") + theme(axis.text.x = element_text(angle = 90))
+#for Fzd4
+plotExpression(object = sce, features = Fzd4, x = "stage", colour_by = "stage") + theme(axis.text.x = element_text(angle = 90))
+plotExpression(object = sce, features = Fzd4, x = "celltype", colour_by = "celltype") + theme(axis.text.x = element_text(angle = 90))
+#for Fzd5
+plotExpression(object = sce, features = Fzd5, x = "stage", colour_by = "stage") + theme(axis.text.x = element_text(angle = 90))
+plotExpression(object = sce, features = Fzd5, x = "celltype", colour_by = "celltype") + theme(axis.text.x = element_text(angle = 90))
+##TODO: ADD conclusion
+```
+```{r}
+genes <- c("ENSMUSG00000022297", "ENSMUSG00000041075", "ENSMUSG00000036904", "ENSMUSG00000049551", "ENSMUSG00000081683")
+Fzd6 <- "ENSMUSG00000022297"
+Fzd7 <- "ENSMUSG00000041075"
+Fzd8 <- "ENSMUSG00000036904"
+Fzd9 <- "ENSMUSG00000049551"
+Fzd10 <- "ENSMUSG00000081683"
+plotExpression(object = sce, features = genes, x = "stage", colour_by = "stage") + theme(axis.text.x = element_text(angle = 90))
+coi <- colData(sce)$stage %in% c("E7.0", "E8.0")
+#unique(colData(sce)$stage)
+sce_subset <- sce[,coi]
+plotReducedDim(object = sce_subset, dimred="umap", colour_by="stage")
+plotExpression(object = sce, features = genes, x = "celltype", colour_by = "celltype") + theme(axis.text.x = element_text(angle = 90))
+
+#for Fzd6
+plotExpression(object = sce, features = Fzd6, x = "stage", colour_by = "stage") + theme(axis.text.x = element_text(angle = 90))
+plotExpression(object = sce, features = Fzd6, x = "celltype", colour_by = "celltype") + theme(axis.text.x = element_text(angle = 90))
+#for Fzd7
+plotExpression(object = sce, features = Fzd7, x = "stage", colour_by = "stage") + theme(axis.text.x = element_text(angle = 90))
+plotExpression(object = sce, features = Fzd7, x = "celltype", colour_by = "celltype") + theme(axis.text.x = element_text(angle = 90))
+#for Fzd8
+plotExpression(object = sce, features = Fzd8, x = "stage", colour_by = "stage") + theme(axis.text.x = element_text(angle = 90))
+plotExpression(object = sce, features = Fzd8, x = "celltype", colour_by = "celltype") + theme(axis.text.x = element_text(angle = 90))
+#for  Fzd9
+plotExpression(object = sce, features = Fzd9, x = "stage", colour_by = "stage") + theme(axis.text.x = element_text(angle = 90))
+plotExpression(object = sce, features = Fzd9, x = "celltype", colour_by = "celltype") + theme(axis.text.x = element_text(angle = 90))
+#for Fzd10
+plotExpression(object = sce, features = Fzd10, x = "stage", colour_by = "stage") + theme(axis.text.x = element_text(angle = 90))
+plotExpression(object = sce, features = Fzd10, x = "celltype", colour_by = "celltype") + theme(axis.text.x = element_text(angle = 90))
+
+
+```
+
+
