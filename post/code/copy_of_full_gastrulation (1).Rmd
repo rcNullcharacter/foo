@@ -1,6 +1,6 @@
 ---
 title: "Selected graphs for Wnt, Frizzeled, LRP5/6, DVL"
-author: "Lorenzo Rodriguez-Cruz"
+author: "nullchar"
 date: "March 8, 2022"
 output:
   html_document:
